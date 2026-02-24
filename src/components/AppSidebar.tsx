@@ -17,9 +17,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden md:flex flex-col w-60 border-r border-border bg-card min-h-screen p-4 gap-2">
       <div className="flex items-center gap-2 px-3 py-4 mb-4">
-        <div className="h-8 w-8 rounded-lg gradient-hero flex items-center justify-center">
-          <span className="text-primary-foreground font-bold text-sm">IS</span>
-        </div>
+        <img src="/logo.png" alt="ISSS Logo" className="h-10 w-10 object-contain" />
         <span className="font-semibold text-foreground text-lg">ISSS Planner</span>
       </div>
 

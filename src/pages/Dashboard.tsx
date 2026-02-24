@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { AppLayout } from '@/components/AppLayout';
 import { EctsProgressBar } from '@/components/EctsProgressBar';
+import { CircularProgress } from '@/components/CircularProgress';
 import { StatusBadge } from '@/components/StatusBadge';
 import { useUserModules } from '@/hooks/useModules';
 import { useProfile } from '@/hooks/useProfile';
@@ -91,12 +92,27 @@ export default function Dashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="rounded-xl bg-card border border-border p-6 card-shadow"
+          className="rounded-[2.5rem] bg-card border border-border p-10 card-shadow relative overflow-hidden flex flex-col items-center justify-center text-center space-y-6"
         >
-          <EctsProgressBar value={totalPassed} max={TOTAL_ECTS} label="Graduation Progress" size="lg" />
-          <p className="text-sm text-muted-foreground mt-2">
-            {totalPassed >= TOTAL_ECTS ? '🎉 Congratulations! You\'ve met the ECTS requirement!' : `${remaining} ECTS remaining to reach ${TOTAL_ECTS}.`}
-          </p>
+          {/* Abstract background blur */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+
+          <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500 z-10">
+            Degree Completion
+          </h2>
+
+          <div className="z-10 bg-background/50 backdrop-blur-3xl rounded-full p-4 shadow-inner border border-white/10">
+            <CircularProgress value={totalPassed} max={TOTAL_ECTS} size={220} strokeWidth={16} />
+          </div>
+
+          <div className="z-10 space-y-1">
+            <p className="text-lg font-medium text-foreground">
+              {totalPassed >= TOTAL_ECTS ? '🎉 Congratulations! You\'ve met the ECTS requirement!' : 'Keep up the great work!'}
+            </p>
+            <p className="text-muted-foreground text-sm font-medium">
+              You need {remaining} more credits to graduate.
+            </p>
+          </div>
         </motion.div>
 
         {/* Requirements Checklist */}

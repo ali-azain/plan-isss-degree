@@ -90,11 +90,10 @@ export default function SettingsPage() {
                 <button
                   key={f}
                   onClick={() => setFocus(focus === f ? '' : f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${
-                    focus === f
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${focus === f
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-card text-foreground border-border hover:bg-accent'
-                  }`}
+                    }`}
                 >
                   {f}
                 </button>
@@ -131,7 +130,7 @@ export default function SettingsPage() {
           className="rounded-xl bg-card border border-border p-6 card-shadow"
         >
           <Button variant="outline" onClick={handleSignOut} className="gap-2 text-destructive hover:text-destructive">
-            <LogOut className="h-4 w-4" /> Sign Out
+            <LogOut className="h-4 w-4" /> Sign Out & Clear Session
           </Button>
         </motion.div>
       </div>

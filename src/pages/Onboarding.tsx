@@ -31,8 +31,8 @@ export default function Onboarding() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <div className="h-14 w-14 rounded-2xl gradient-hero flex items-center justify-center mx-auto mb-4">
-            <GraduationCap className="h-7 w-7 text-primary-foreground" />
+          <div className="mx-auto mb-4 flex justify-center items-center">
+            <img src="/logo.png" alt="ISSS Logo" className="h-16 w-16 object-contain" />
           </div>
           <h1 className="text-2xl font-bold text-foreground">Set Up Your Profile</h1>
           <p className="text-muted-foreground mt-2">Tell us about your studies to personalize your planner.</p>
@@ -71,11 +71,10 @@ export default function Onboarding() {
                 <button
                   key={f}
                   onClick={() => setFocus(focus === f ? null : f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${
-                    focus === f
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${focus === f
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-card text-foreground border-border hover:bg-accent'
-                  }`}
+                    }`}
                 >
                   {f}
                 </button>

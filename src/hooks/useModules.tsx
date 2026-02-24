@@ -15,7 +15,7 @@ export function useAllModules() {
   return useQuery({
     queryKey: ['modules'],
     queryFn: getModules,
-    staleTime: 1000 * 60 * 10,
+    staleTime: 0,
   });
 }
 

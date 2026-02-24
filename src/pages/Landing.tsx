@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, CalendarDays, FileDown, ArrowRight, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 const features = [
   {
@@ -32,32 +34,34 @@ const fadeUp = {
 };
 
 export default function Landing() {
-  const { user } = useAuth();
+  const { user, guestSignIn } = useAuth();
+  const [isStarting, setIsStarting] = useState(false);
+  const navigate = useNavigate();
+
+  const handleStart = async () => {
+    setIsStarting(true);
+    const { error } = await guestSignIn();
+    setIsStarting(false);
+    if (error) {
+      toast.error('Failed to start anonymous session');
+    } else {
+      navigate('/onboarding');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg gradient-hero flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">IS</span>
-          </div>
+          <img src="/logo.png" alt="ISSS Logo" className="h-10 w-10 object-contain" />
           <span className="font-semibold text-foreground text-lg">ISSS Planner</span>
         </div>
         <div className="flex items-center gap-3">
-          {user ? (
+          {user && (
             <Link to="/dashboard">
-              <Button size="sm">Dashboard</Button>
+              <Button size="sm">Go to Planner</Button>
             </Link>
-          ) : (
-            <>
-              <Link to="/auth">
-                <Button variant="ghost" size="sm">Log in</Button>
-              </Link>
-              <Link to="/auth?signup=true">
-                <Button size="sm">Sign up</Button>
-              </Link>
-            </>
           )}
         </div>
       </header>
@@ -83,16 +87,17 @@ export default function Landing() {
             Know exactly where you stand — always.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to={user ? '/dashboard' : '/auth?signup=true'}>
-              <Button size="lg" className="gap-2 px-8">
-                Get Started <ArrowRight className="h-4 w-4" />
+            {user ? (
+              <Link to="/dashboard">
+                <Button size="lg" className="gap-2 px-8">
+                  Go to Planner <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            ) : (
+              <Button size="lg" onClick={handleStart} disabled={isStarting} className="gap-2 px-8">
+                {isStarting ? 'Setting up...' : 'Get Started'} <ArrowRight className="h-4 w-4" />
               </Button>
-            </Link>
-            <Link to={user ? '/catalog' : '/auth'}>
-              <Button size="lg" variant="outline" className="px-8">
-                Browse Modules
-              </Button>
-            </Link>
+            )}
           </div>
         </motion.div>
       </section>
